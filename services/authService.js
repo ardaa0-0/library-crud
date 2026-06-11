@@ -2,17 +2,6 @@ const User = require('../models/User');
 
 const createUser = async (userBody) => {
     try {
-        
-        const {name, email, password} = userBody;
-
-        if(!(name && email && password)) {
-            return {
-                type : 'Error',
-                statusCode : 400,
-                message : 'All fields are required'
-            }
-        };
-
         const userExists = await User.findOne({email});
 
         if(userExists) {
@@ -24,9 +13,7 @@ const createUser = async (userBody) => {
         };
 
         const user = await User.create({
-            email,
-            name,
-            password
+            userBody
         });
 
         return {
@@ -40,6 +27,31 @@ const createUser = async (userBody) => {
     }
 }
 
+
+const loginUser = async (userBody) => {
+    
+    const {email, password} = userBody;
+
+    const user = await User.findOne({email});
+
+    if(!user || !(await user.comparePassword(password))) {
+        return {
+            type : 'Error',
+            statusCode : 401,
+            message : 'Invalid email or password'
+        }
+    }
+
+    return {
+        type : 'Success',
+        statusCode : 200,
+        message : 'login successful',
+        user
+    }
+
+}
+
 module.exports = {
-    createUser
+    createUser,
+    loginUser
 }

@@ -7,9 +7,9 @@ app.use(express.json());
 
 connectDB();
 
-const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
-app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
