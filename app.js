@@ -8,8 +8,10 @@ app.use(express.json());
 connectDB();
 
 const authRoutes = require('./routes/authRoutes');
+const bookRoutes = require('./routes/bookRoutes');
 
 app.use('/auth', authRoutes);
+app.use('/book', bookRoutes);
 
 const PORT = process.env.PORT || 3000;
 
