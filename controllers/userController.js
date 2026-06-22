@@ -4,6 +4,7 @@ const getUserById = async (req,res) => {
 
     const {type, statusCode, message, user} = await userService.getUser(req.params.id);
 
+
     if(type === 'Error') {
         return res.status(statusCode).json({message});
     }

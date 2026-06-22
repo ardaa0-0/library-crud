@@ -5,6 +5,8 @@ const connectDB = require('./config/db');
 const app = express();
 app.use(express.json());
 
+console.log(process.env.JWT_SECRET_KEY);
+
 connectDB();
 
 const authRoutes = require('./routes/authRoutes');

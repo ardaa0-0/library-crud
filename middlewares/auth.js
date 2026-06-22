@@ -1,7 +1,19 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const auth = async (req,res,next) => {
+const restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                message: 'You do not have permission to perform this action'
+            });
+        }
+
+        next();
+    };
+};
+
+const verifyToken = async (req,res,next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
 
@@ -25,4 +37,7 @@ const auth = async (req,res,next) => {
     }   
 }
 
-module.exports = auth;
+module.exports = {
+    verifyToken,
+    restrictTo
+}

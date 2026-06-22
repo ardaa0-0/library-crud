@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const tokenService = require('./tokenService');
 
 const getUser = async (userId) => {
     try {
@@ -31,6 +32,32 @@ const getUser = async (userId) => {
     }
 } 
 
+const createUser = async (userBody) => {
+    try {
+        const userExists = await User.findOne({email : userBody.email});
+
+        if(userExists) {
+            return {
+                type : 'Error',
+                statusCode : 400,
+                message : 'User already exists'
+            }
+        };
+
+        const user = await User.create(userBody)
+
+        return {
+            type : 'Success',
+            statusCode : 201,
+            user
+        }
+
+    }catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getUser
+    getUser,
+    createUser
 }

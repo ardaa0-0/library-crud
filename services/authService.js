@@ -1,34 +1,5 @@
 const User = require('../models/User');
-const generateToken = require('../utils/generateToken');
-
-const createUser = async (userBody) => {
-    try {
-        const userExists = await User.findOne({email : userBody.email});
-
-        if(userExists) {
-            return {
-                type : 'Error',
-                statusCode : 400,
-                message : 'User already exists'
-            }
-        };
-
-        const user = await User.create(userBody);
-
-        const token = generateToken(user._id);
-
-        return {
-            type : 'Success',
-            statusCode : 201,
-            user,
-            token
-        }
-
-    }catch (error) {
-        console.log(error);
-    }
-}
-
+const tokenService = require('./tokenService');
 
 const loginUser = async (userBody) => {
 
@@ -46,7 +17,7 @@ const loginUser = async (userBody) => {
         }
     }
 
-    const token = generateToken(user._id);
+    const token = tokenService.generateAuthTokens(user);
 
     return {
         type : 'Success',
@@ -63,6 +34,5 @@ const loginUser = async (userBody) => {
 }
 
 module.exports = {
-    createUser,
     loginUser
 }
