@@ -1,44 +1,34 @@
 const bookService = require('../services/bookService');
+const catchAsync = require('../utils/catchAsync');
 
-const addBook = async (req, res,next) => {
-
-    try {
-        const book = await bookService.addBook(req.body);
-
-        res.status(201).json({ type: "success", book });
-    } catch(error) {
-        next(error);
-    }
-};
+const addBook = catchAsync(async (req, res,next) => {
+    const book = await bookService.addBook(req.body);
+    res.status(201).json({ type: "success", book });
+})
 
 
-const updateBook = async (req, res, next) => {
-    try {
+const updateBook = catchAsync(async (req, res, next) => {
         const book = await bookService.updateBook(
             req.params.id,
             req.body
         );
-
         res.status(200).json({type: "success",book});
-    } catch(error) {
-        next(error);
-    }
+});
 
-};
+const deleteBook = catchAsync(async(req,res,next) => {
+    const book = await bookService.deleteBook(req.params.id);
+    res.status(200).json({message : "Book deleted successfully"});
+});
 
-const deleteBook = async (req,res,next) => {
-    try {
-        const book = await bookService.deleteBook(req.params.id);
-
-        res.status(200).json({message : "Book deleted successfully"});
-    }catch(error) {
-        next(error);
-    }
-}
+const getBook = catchAsync(async(req,res,next) => {
+    const book = await bookService.getBook(req.params.id);
+    res.status(200).json({book});
+});
 
 
 module.exports = {
     addBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    getBook
 }
