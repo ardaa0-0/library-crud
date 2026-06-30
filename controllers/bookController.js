@@ -25,10 +25,15 @@ const getBook = catchAsync(async(req,res,next) => {
     res.status(200).json({book});
 });
 
+const getAllBooks = catchAsync(async(req,res,next) => {
+    const books = await bookService.getAllBooks();
+    res.status(200).json({books});
+});
 
 module.exports = {
     addBook,
     updateBook,
     deleteBook,
-    getBook
+    getBook,
+    getAllBooks
 }

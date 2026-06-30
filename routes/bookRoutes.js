@@ -10,5 +10,6 @@ router.post('/add', auth.verifyToken, auth.restrictTo('admin'), validate(bookVal
 router.put('/update/:id', auth.verifyToken, auth.restrictTo('admin'), validate(bookValidation.bookIdSchema, 'params'),  validate(bookValidation.bookUpdateSchema), bookController.updateBook);
 router.delete('/delete/:id', auth.verifyToken, auth.restrictTo('admin'), validate(bookValidation.bookIdSchema, 'params'), bookController.deleteBook);
 router.get('/:id', auth.verifyToken, validate(bookValidation.bookIdSchema, 'params'), bookController.getBook);
+router.get('/', auth.verifyToken, bookController.getAllBooks);
 
 module.exports = router;

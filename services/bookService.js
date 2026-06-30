@@ -30,7 +30,6 @@ const deleteBook = async (bookId) => {
     if (!book) {
         throw new AppError('Book not found', 404);
     }
-    return book;
 }
 
 const getBook = async (bookId) => {
@@ -41,9 +40,15 @@ const getBook = async (bookId) => {
     return book;
 }
 
+const getAllBooks = async () => { 
+    const books = await Book.find();
+    return books;
+}
+
 module.exports = {
     addBook,
     updateBook,
     deleteBook,
+    getAllBooks,
     getBook
 }
