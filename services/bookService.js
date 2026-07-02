@@ -46,11 +46,14 @@ const getAllBooks = async (query) => {
     const limit = parseInt(query.limit) || 10;
     const skip = (page - 1) * limit;
 
+
     const books = await Book.find()
     .skip(skip)
     .limit(limit);
+
     return books;
 }
+
 
 module.exports = {
     addBook,
