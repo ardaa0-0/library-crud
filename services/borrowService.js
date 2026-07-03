@@ -31,6 +31,23 @@ const borrowBook = async (bookId, userId) => {
     return borrow;
 };
 
+const myBorrowedBooks = async (userId) => {
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new AppError('User not found', 404);
+    }
+
+    const borrowedBooks = await Borrow.find({ user: userId }).populate('book user', 'title author name email');
+
+    if (borrowedBooks.length === 0) {
+        throw new AppError('No borrowed books found for this user', 404);
+    }
+
+    return borrowedBooks;
+}
+
 module.exports = {
-    borrowBook
+    borrowBook,
+    myBorrowedBooks
 };
