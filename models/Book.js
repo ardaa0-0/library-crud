@@ -26,10 +26,6 @@ const bookSchema = new mongoose.Schema({
         type : Number,
         required : true,
         min : 1
-    },
-    bookIsBorrowed : {
-        type : Boolean,
-        default : false
     }
 }, {
     timestamps : true

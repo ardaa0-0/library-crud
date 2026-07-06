@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.post('/:id', auth.verifyToken, validate(borrowValidation.borrowBookSchema, 'params'), borrowController.borrowBook);
 router.get('/myBooks', auth.verifyToken, borrowController.myBorrowedBooks);
+router.put('/complete/:id', auth.verifyToken, validate(borrowValidation.borrowBookSchema, 'params'), borrowController.completeBorrow);
 
 module.exports = router;
