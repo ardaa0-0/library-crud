@@ -70,8 +70,26 @@ const completeBorrow = async (borrowId, userId) => {
     await borrow.save();
 }
 
+const borrowBookList = async (query) => {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const borrows = await Borrow.find()
+        .skip(skip)
+        .limit(limit)
+        .populate('book user', 'title author name email');
+
+    if (borrows.length === 0) {
+        throw new AppError('No borrowed books found', 404);
+    }
+
+    return borrows;
+}
+
 module.exports = {
     borrowBook,
     myBorrowedBooks,
-    completeBorrow
+    completeBorrow,
+    borrowBookList
 };

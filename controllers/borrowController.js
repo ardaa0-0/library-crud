@@ -16,8 +16,14 @@ const completeBorrow = catchAsync(async (req, res, next) => {
     res.status(200).json({ message: "Borrow completed successfully", borrow });
 });
 
+const getAllBorrowedBooks = catchAsync(async (req, res, next) => {
+    const borrowedBooks = await borrowService.borrowBookList(req.query);
+    res.status(200).json({ count : borrowedBooks.length, borrowedBooks });
+});
+
 module.exports = {
     borrowBook,
     myBorrowedBooks,
-    completeBorrow
+    completeBorrow,
+    getAllBorrowedBooks
 }
