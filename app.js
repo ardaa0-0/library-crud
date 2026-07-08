@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
+const AppError = require('./utils/appError');
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,10 @@ app.use('/auth', authRoutes);
 app.use('/book', bookRoutes);
 app.use('/user', userRoutes);
 app.use('/borrow', borrowRoutes);
+
+app.use((req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
 app.use(globalErrorHandler);
 
