@@ -22,7 +22,26 @@ const createUser = async (userBody) => {
  
 }
 
+const addFavoriteBook = async (userId, bookId) => {
+    const user = await User.findById(userId);
+
+    if(!user) {
+        throw new AppError('User not found', 404);
+    }  
+
+    if(user.favorites.includes(bookId)) {
+        throw new AppError('Book already in favorites', 400);
+    }
+
+    user.favorites.push(bookId);
+    await user.save();
+    return user;
+}
+
+
+
 module.exports = {
     getUser,
-    createUser
+    createUser,
+    addFavoriteBook
 }
