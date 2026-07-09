@@ -38,10 +38,14 @@ const addFavoriteBook = async (userId, bookId) => {
     return user;
 }
 
-
+const getFavoriteBooks = async (userId) => {
+    const user = await User.findById(userId).populate('favorites'); 
+    return user.favorites;
+}
 
 module.exports = {
     getUser,
     createUser,
-    addFavoriteBook
+    addFavoriteBook,
+    getFavoriteBooks
 }

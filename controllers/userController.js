@@ -11,8 +11,15 @@ const addFavoriteBook = catchAsync(async (req,res,next) => {
     res.status(200).json({message : 'Book added to favorites', user});
 });
 
+const getFavoriteBooks = catchAsync(async (req,res,next) => {
+    const favoriteBooks = await userService.getFavoriteBooks(req.user.id);
+    res.status(200).json({count : favoriteBooks.length, favoriteBooks});
+});
+
+
 
 module.exports = {
     getUserById,
-    addFavoriteBook
+    addFavoriteBook,
+    getFavoriteBooks
 }
