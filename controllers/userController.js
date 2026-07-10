@@ -16,10 +16,16 @@ const getFavoriteBooks = catchAsync(async (req,res,next) => {
     res.status(200).json({count : favoriteBooks.length, favoriteBooks});
 });
 
+const deleteFavoriteBook = catchAsync(async (req,res,next) => {
+    const user = await userService.deleteFavoriteBook(req.user.id, req.params.bookId);
+    res.status(200).json({message : 'Book removed from favorites', user});
+});
+
 
 
 module.exports = {
     getUserById,
     addFavoriteBook,
-    getFavoriteBooks
+    getFavoriteBooks,
+    deleteFavoriteBook
 }

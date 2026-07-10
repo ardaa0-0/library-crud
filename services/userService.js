@@ -43,9 +43,27 @@ const getFavoriteBooks = async (userId) => {
     return user.favorites;
 }
 
+const deleteFavoriteBook = async (userId, bookId) => {
+    const user = await User.findById(userId);
+
+    if(!user) {
+        throw new AppError('User not found', 404);
+    }
+
+    const bookIndex = user.favorites.indexOf(bookId);
+    if(bookIndex === -1) {
+        throw new AppError('Book not found in favorites', 404);
+    }
+
+    user.favorites.splice(bookIndex, 1);
+    await user.save();
+    return user;
+}
+
 module.exports = {
     getUser,
     createUser,
     addFavoriteBook,
-    getFavoriteBooks
+    getFavoriteBooks,
+    deleteFavoriteBook
 }
