@@ -5,7 +5,6 @@ const AppError = require('../utils/AppError');
 
 const borrowBook = async (bookId, userId) => {
     const book = await Book.findById(bookId); 
-
     if (!book) {
         throw new AppError('Book not found', 404);
     }
@@ -14,7 +13,6 @@ const borrowBook = async (bookId, userId) => {
         throw new AppError('Book is out of stock', 400);
     }
     const user = await User.findById(userId);
-
     if (!user) {
         throw new AppError('User not found', 404);
     }
@@ -24,7 +22,6 @@ const borrowBook = async (bookId, userId) => {
         book: book._id,
         dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
     });
-
     book.stock -= 1;
     await book.save();
     return borrow;
@@ -42,7 +39,6 @@ const myBorrowedBooks = async (userId) => {
     if (borrowedBooks.length === 0) {
         throw new AppError('No borrowed books found for this user', 404);
     }
-
     return borrowedBooks;
 }
 
@@ -62,10 +58,8 @@ const completeBorrow = async (borrowId, userId) => {
     }
 
     const book = await Book.findById(borrow.book);
-
     book.stock += 1;
     await book.save();
-
     borrow.returnedAt = new Date();
     await borrow.save();
 }
@@ -83,7 +77,6 @@ const borrowBookList = async (query) => {
     if (borrows.length === 0) {
         throw new AppError('No borrowed books found', 404);
     }
-
     return borrows;
 }
 

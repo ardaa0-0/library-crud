@@ -26,6 +26,14 @@ const bookSchema = new mongoose.Schema({
         type : Number,
         required : true,
         min : 1
+    },
+    averageRating: {
+        type: Number,
+        default: 0,
+    },
+    reviewCount: {
+        type: Number,
+        default: 0,
     }
 }, {
     timestamps : true

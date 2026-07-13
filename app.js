@@ -15,11 +15,13 @@ const authRoutes = require('./routes/authRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
 const borrowRoutes = require('./routes/borrowRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/book', bookRoutes);
 app.use('/user', userRoutes);
 app.use('/borrow', borrowRoutes);
+app.use('/review', reviewRoutes);
 
 app.use((req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
