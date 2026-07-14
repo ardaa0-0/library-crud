@@ -25,6 +25,23 @@ const reviewSchema = {
     })
 };
 
+
+const deleteReviewSchema = {
+    params: joi.object({
+        reviewId: joi.string()
+            .required()
+            .length(24)
+            .messages({
+                'string.base': 'Review ID should be a string',
+                'any.required': 'Review ID is required',
+                'string.length': 'Review ID must be 24 characters long'
+            })
+    }).required().messages({
+        'any.required': 'Review ID is required'
+    })
+};
+
 module.exports = {
-    reviewSchema
+    reviewSchema,
+    deleteReviewSchema
 };

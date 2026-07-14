@@ -28,6 +28,34 @@ const addReview = async (bookId, userId, reviewBody) => {
     return review;
 };
 
+const deleteReview = async (reviewId, userId) => {
+    
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+        throw new AppError('Review not found', 404);
+    }
+
+    if (review.user.toString() !== userId) {
+        throw new AppError('You are not authorized to delete this review', 403);
+    }
+
+    await Review.findByIdAndDelete(reviewId);
+    const book = await Book.findById(review.book);
+    const reviews = await Review.find({ book: review.book });
+
+    if (reviews.length > 0) {
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        book.averageRating = totalRating / reviews.length;
+        book.reviewCount = reviews.length;
+    } else {
+        book.averageRating = 0;
+        book.reviewCount = 0;
+    }
+    await book.save();
+};
+
 module.exports = {
-    addReview
+    addReview,
+    deleteReview
 }

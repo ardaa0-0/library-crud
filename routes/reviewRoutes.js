@@ -7,5 +7,6 @@ const reviewValidation = require('../validations/review.validation');
 const router = express.Router();
 
 router.post('/:bookId', auth.verifyToken, validate(reviewValidation.reviewSchema, 'body'), reviewController.addReview);
+router.delete('/:reviewId', auth.verifyToken, validate(reviewValidation.deleteReviewSchema, 'params'), reviewController.deleteReview);
 
 module.exports = router;

@@ -6,6 +6,12 @@ const addReview = catchAsync(async (req, res, next) => {
     res.status(201).json({review });
 });
 
+const deleteReview = catchAsync(async (req, res, next) => {
+    await reviewService.deleteReview(req.params.reviewId, req.user.id);
+    res.status(204).json({ message: 'Review deleted successfully' });
+});
+
 module.exports = {
-    addReview
+    addReview,
+    deleteReview
 }
