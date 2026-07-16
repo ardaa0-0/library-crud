@@ -11,7 +11,13 @@ const deleteReview = catchAsync(async (req, res, next) => {
     res.status(204).json({ message: 'Review deleted successfully' });
 });
 
+const getAllReviews = catchAsync(async (req, res, next) => {
+    const reviews = await reviewService.getAllReviews(req.params.bookId);
+    res.status(200).json({ reviews });
+});
+
 module.exports = {
     addReview,
-    deleteReview
+    deleteReview,
+    getAllReviews
 }

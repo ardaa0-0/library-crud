@@ -55,7 +55,24 @@ const deleteReview = async (reviewId, userId) => {
     await book.save();
 };
 
+const getAllReviews = async (bookId) => {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+        throw new AppError('Book not found', 404);
+    }
+
+    const reviews = await Review.find({ book: bookId }).populate('user', 'name email');
+
+    if(reviews.length === 0) {
+        throw new AppError('No reviews found for this book', 404);
+    }
+    
+    return reviews;
+}
+
 module.exports = {
     addReview,
-    deleteReview
+    deleteReview,
+    getAllReviews
 }
