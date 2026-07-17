@@ -26,7 +26,7 @@ const reviewSchema = {
 };
 
 
-const deleteReviewSchema = {
+const idReviewSchema = {
     params: joi.object({
         reviewId: joi.string()
             .required()
@@ -43,5 +43,5 @@ const deleteReviewSchema = {
 
 module.exports = {
     reviewSchema,
-    deleteReviewSchema
+    idReviewSchema
 };

@@ -16,8 +16,14 @@ const getAllReviews = catchAsync(async (req, res, next) => {
     res.status(200).json({ reviews });
 });
 
+const updateReview = catchAsync(async (req, res, next) => {
+    const updatedReview = await reviewService.updateReview(req.params.reviewId, req.user.id, req.body);
+    res.status(200).json({ updatedReview });
+});
+
 module.exports = {
     addReview,
     deleteReview,
-    getAllReviews
+    getAllReviews,
+    updateReview
 }
