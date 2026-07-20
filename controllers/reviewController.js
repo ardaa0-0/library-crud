@@ -21,9 +21,15 @@ const updateReview = catchAsync(async (req, res, next) => {
     res.status(200).json({ updatedReview });
 });
 
+const getReviewById = catchAsync(async (req, res, next) => {
+    const review = await reviewService.getReviewById(req.params.reviewId);
+    res.status(200).json({ review });
+});
+
 module.exports = {
     addReview,
     deleteReview,
     getAllReviews,
-    updateReview
+    updateReview,
+    getReviewById
 }

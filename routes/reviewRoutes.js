@@ -10,5 +10,6 @@ router.post('/:bookId', auth.verifyToken, validate(reviewValidation.reviewSchema
 router.delete('/:reviewId', auth.verifyToken, validate(reviewValidation.idReviewSchema, 'params'), reviewController.deleteReview);
 router.put('/:reviewId', auth.verifyToken, validate(reviewValidation.idReviewSchema, 'params'), validate(reviewValidation.reviewSchema, 'body'), reviewController.updateReview);
 router.get('/:bookId', reviewController.getAllReviews);
+router.get('/review/:reviewId', auth.verifyToken, validate(reviewValidation.idReviewSchema, 'params'), reviewController.getReviewById);
 
 module.exports = router;

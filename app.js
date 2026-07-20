@@ -2,12 +2,10 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
-const AppError = require('./utils/appError');
+const AppError = require('./utils/AppError');
 
 const app = express();
 app.use(express.json());
-
-console.log(process.env.JWT_SECRET_KEY);
 
 connectDB();
 

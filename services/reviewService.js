@@ -103,5 +103,5 @@ module.exports = {
     addReview,
     deleteReview,
     getAllReviews,
-    updateReview
+    updateReview,
 }
